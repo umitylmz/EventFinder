@@ -1,5 +1,14 @@
 
-Communicator
-An Android application which helps users to keep track their expenses in their house.
+# EventFinder
 
-Communicator is an efficient way to split your bills in a house. Especially, if you are a student who stays in a dormitory or your own student house, this is the solution that you have been looking for.
+
+EventFinder is an android application which helps user to find events around him or with a custom search. Search can be done with
+4 different parameters which are category, time, location and keyword.
+
+Events are shown on a recyclerview with its image, start time and name of event. When an item on recyclerview is clicked, details of 
+events are shown with explanations.
+
+In addition, EventFinder uses its database to store events informations which are found by the user on previous searches and uses them 
+on next searches.
+
+# ScreenShots
