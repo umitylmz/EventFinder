@@ -12,6 +12,10 @@ In addition, EventFinder uses its database to store events informations which ar
 on next searches.
 
 # ScreenShots
+<img src="https://user-images.githubusercontent.com/47483612/52529320-badff480-2d00-11e9-864a-67e05dd974b0.png" width="300" height="500" />
+<img src="https://user-images.githubusercontent.com/47483612/52529208-21641300-2cff-11e9-9143-ef0d5ed318fc.png" width="300" height="500" />
+<img src="https://user-images.githubusercontent.com/47483612/52529324-c29f9900-2d00-11e9-956d-a0f62431ce46.png" width="300" height="500" />
+<img src="https://user-images.githubusercontent.com/47483612/52529323-c0d5d580-2d00-11e9-8dfa-ce8105eb096e.png" width="300" height="500" />
+<img src="https://user-images.githubusercontent.com/47483612/52529322-bfa4a880-2d00-11e9-831b-4665a009530a.png" width="300" height="500" />
 
 
-https://raw.github.com/umitylmz/EventFinder/master/ScreenShots/Screenshot_20190210-054914.png
