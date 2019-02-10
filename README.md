@@ -12,3 +12,6 @@ In addition, EventFinder uses its database to store events informations which ar
 on next searches.
 
 # ScreenShots
+
+
+https://raw.github.com/umitylmz/EventFinder/master/ScreenShots/Screenshot_20190210-054914.png
