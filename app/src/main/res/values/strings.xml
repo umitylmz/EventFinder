@@ -1,0 +1,41 @@
+<resources>
+    <string name="app_name">EventFinder</string>
+    <string name="action_help">Help</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_refresh">Refresh</string>
+
+
+    <string-array name="categories">
+        <item>Music</item>
+        <item>Technology</item>
+        <item>Concerts</item>
+        <item>Sports</item>
+        <item>Festivals</item>
+        <item>Art</item>
+        <item>Comedy</item>
+        <item>Education</item>
+        <item>Fundraising</item>
+        <item>Business</item>
+        <item>Nightlife</item>
+        <item>University</item>
+        <item>Performing Arts</item>
+        <item>Politics</item>
+        <item>Science</item>
+        <item>Religion</item>
+        <item>Other</item>
+
+
+    </string-array>
+
+    <string-array name="dates">
+        <item>Future</item>
+        <item>This Weekend</item>
+        <item>Next Weekend</item>
+        <item>This Month</item>
+        <item>Next Month</item>
+        <item>Past</item>
+
+
+    </string-array>
+
+</resources>

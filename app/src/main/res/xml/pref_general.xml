@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+
+    <ListPreference
+        android:defaultValue="music"
+        android:entries="@array/categories"
+        android:entryValues="@array/categories"
+        android:key="categories"
+        android:title="Categories" />
+    <ListPreference
+        android:defaultValue="future"
+        android:entries="@array/dates"
+        android:entryValues="@array/dates"
+        android:key="dates"
+        android:title="Dates" />
+    <EditTextPreference
+        android:defaultValue=" "
+        android:key="keyword"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="Keyword" />
+    <EditTextPreference
+
+        android:title        ="Location"
+        android:key          ="location"
+        android:defaultValue ="san+diego"
+        android:inputType    ="text"
+        android:singleLine   ="true">
+    </EditTextPreference>
+
+
+
+
+
+
+</PreferenceScreen>

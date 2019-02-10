@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:design="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+
+    tools:context=".search">
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/navigation3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:itemBackground="@color/blue"
+        app:itemIconTint="@color/white"
+        app:itemIconSize="22dp"
+        app:itemTextColor="@color/white"
+
+        design:menu="@menu/navigation" >
+
+    </android.support.design.widget.BottomNavigationView>
+
+    <LinearLayout
+        android:layout_width="262dp"
+        android:layout_height="405dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="132dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/navigation3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <Spinner
+
+            android:id="@+id/cats"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_height="60dp"
+            android:theme="@style/MyEditTextTheme"
+
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+
+        <Spinner
+            android:id="@+id/dates"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="15dp"
+            android:layout_height="60dp"
+            android:theme="@style/MyEditTextTheme"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+
+        <EditText
+            android:id="@+id/editText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="20dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textColor="@color/blue"
+            android:theme="@style/MyEditTextTheme"
+            android:hint="Location"
+
+            />
+
+        <EditText
+            android:id="@+id/editText2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:color="@color/blue"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textColor="@color/blue"
+            android:theme="@style/MyEditTextTheme"
+            android:hint="Keyword"/>
+
+        <Button
+            android:id="@+id/searchbutton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="175dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="SEARCH"
+            android:textColor="@color/white"
+            android:shadowColor="@color/blue"
+            android:background="@color/blue"
+            android:textColorHighlight="@color/blue"
+            />
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
