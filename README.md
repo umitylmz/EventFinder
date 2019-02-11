@@ -2,7 +2,7 @@
 # EventFinder
 
 
-EventFinder is an android application which helps user to find events around him also, with a custom search. Search can be done with
+EventFinder is an android application which helps user to find events around user with a custom search. Search can be done with
 4 different parameters which are category, time, location and keyword.
 
 Events are shown on a recyclerview with its image, start time and name of event. When an item on recyclerview is clicked, details of 
@@ -10,6 +10,11 @@ events are shown with explanations.
 
 In addition, EventFinder uses its database to store events informations which are found by the user on previous searches and uses them 
 on next searches.
+
+Applied Android's advanced compenents such as notifications, services, broadcast receivers and content providers.
+Synchronized SQLite database in Android app.
+Application gets events’ informations from an API.
+
 
 # ScreenShots
 <img src="https://user-images.githubusercontent.com/47483612/52529320-badff480-2d00-11e9-864a-67e05dd974b0.png" width="300" height="500" />
