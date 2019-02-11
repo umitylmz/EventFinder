@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import static com.example.ylmz.recyclevieweventfinder.LoadData.ids;
+import static com.example.ylmz.recyclevieweventfinder.myAdapter.ids ;
 
 public class Detailed_Event extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -91,6 +91,10 @@ public class Detailed_Event extends AppCompatActivity implements LoaderManager.L
             m = getIntent().getIntExtra("Info",0);
         }
 
+        Log.v("İDS",String.valueOf(ids.size()));
+        for (int i=0;i<ids.size();i++){
+            Log.v("İDS",ids.get(i));
+        }
         String id=ids.get(m);
         for(int k=0;k<mycur.getCount();k++){
             mycur.moveToPosition(k);

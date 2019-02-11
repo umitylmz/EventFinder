@@ -1,20 +1,31 @@
 package com.example.ylmz.recyclevieweventfinder;
 
+import android.app.AlarmManager;
 import android.app.LoaderManager;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
+import android.graphics.Color;
 import android.net.Uri;
 import android.content.CursorLoader;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -23,6 +34,9 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 
 
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -52,13 +66,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import static com.example.ylmz.recyclevieweventfinder.App.CHANNEL_1_ID;
+
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<Cursor>{
 
 
 
     private RecyclerView RW;
-    private myAdapter adapter;
+    public static myAdapter adapter;
     private List<Event> events;
+    public static ProgressDialog myp;
+    private final String CHANNEL_ID="notification1";
+    private final int NOTIFICATION_ID=001;
+    private NotificationManager notifManager;
+    private NotificationManager mNotificationManager;
+    private NotificationCompat.Builder mBuilder;
+    public static final String NOTIFICATION_CHANNEL_ID = "10001";
 
 
     public Uri CONTENT_URI = Uri.parse("content://com.example.ylmz.recyclevieweventfinder").buildUpon()
@@ -72,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private int mPosition;
     private Uri mUri;
     private static final int CURSOR_LOADER_ID = 0;
+    private NotificationManagerCompat notificationManager;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
@@ -126,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
 
 
-        adapter = new myAdapter(events,this);
+        adapter = new myAdapter(this);
 
 
 
@@ -141,6 +165,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         RW.setAdapter(adapter);
 
 
+
         String category="music";
         String date="Future";
         String keyword="";
@@ -148,42 +173,101 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         Bundle extras = getIntent().getExtras();
         if(extras!=null){
-            if(extras.getString("startcat")!=null){
-                category = extras.getString("startcat");
 
-                Log.v("catttt",category);
+            if(extras.containsKey("NotificationMessage"))
+            {
+                String alarm=extras.getString("NotificationMessage");
+                Log.v("NEYMİŞ",alarm);
+                if(alarm.equals("first")){
+                    URL_DATA_final = "http://api.eventful.com/json/events/search?app_key=WRRCckF42n7ZzTmp&location=ankara&t=future&page_size=7&sort_order=popularity";
+
+                    Log.v("ANKARA","ANKARA");
+                }
+                else{
+                    URL_DATA_final = "http://api.eventful.com/json/events/search?app_key=WRRCckF42n7ZzTmp&t=next+week&page_size=7&sort_order=popularity";
+                    Log.v("ANKARADEĞİL","ANKARA");
+                }
+
             }
             else{
-                category=extras.getString("catg");
-                category=category.replaceAll(" ", "+");
-                category=category.toLowerCase();
-                Log.v("catttt2",category);
-                keyword=extras.getString("key");
-                keyword=keyword.replaceAll(" ", "+");
-                Log.v("catttt2",keyword);
-                location=extras.getString("location");
-                location=location.replaceAll(" ", "+");
-                Log.v("catttt2",location);
-                date=extras.getString("date");
-                date=date.replaceAll(" ", "+");
-                Log.v("catttt2",date);
-            }
+                if(extras.getString("startcat")!=null){
+                    category = extras.getString("startcat");
+
+                    Log.v("catttt",category);
+                }
+
+                else{
+                    category=extras.getString("catg");
+                    category=category.replaceAll(" ", "+");
+                    category=category.toLowerCase();
+                    Log.v("catttt2",category);
+                    keyword=extras.getString("key");
+                    keyword=keyword.replaceAll(" ", "+");
+                    Log.v("catttt2",keyword);
+                    location=extras.getString("location");
+                    location=location.replaceAll(" ", "+");
+                    Log.v("catttt2",location);
+                    date=extras.getString("date");
+                    date=date.replaceAll(" ", "+");
+                    Log.v("catttt2",date);
+
+                }
+                URL_DATA_final = "http://api.eventful.com/json/events/search?app_key=WRRCckF42n7ZzTmp&location="+location+"&t="+date+"&page_size=7&sort_order=popularity&c="+category+"&q="+keyword;
 
             }
 
 
-        URL_DATA_final = "http://api.eventful.com/json/events/search?app_key=WRRCckF42n7ZzTmp&location="+location+"&t="+date+"&page_size=15&sort_order=popularity&c="+category+"&q="+keyword;
+
+        }
 
 
 
-        LoadData load = new LoadData((myAdapter) adapter, this);
-        load.execute(URL_DATA_final);
-        adapter.notifyDataSetChanged();
+        Bundle extras2 = getIntent().getExtras();
+        if(extras2 != null){
+
+        }
+
+
+        Intent intent = new Intent(this,MyService.class);
+
+        intent.putExtra("myURL",URL_DATA_final);
+
+        this.startService(intent);
+
+         ResponseReceiver receiver;
+
+        IntentFilter filter = new IntentFilter(ResponseReceiver.ACTION_RESP);
+        filter.addCategory(Intent.CATEGORY_DEFAULT);
+        receiver = new ResponseReceiver();
+        registerReceiver(receiver, filter);
+
+            adapter.notifyDataSetChanged();
+
+
+        Intent intentAlarm = new Intent(this, AlarmReceiver.class);
+
+        AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+
+        PendingIntent pi = PendingIntent.getBroadcast(this, 12345, intentAlarm, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager.setRepeating(AlarmManager.RTC, System.currentTimeMillis()+10*1000, 1*60*1000, pi);
+
+        Intent intentAlarm2 = new Intent(this, AlarmReceiver2.class);
+        AlarmManager alarmManager2 = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+
+
+        PendingIntent pi2 = PendingIntent.getBroadcast(this, 123456, intentAlarm2, PendingIntent.FLAG_UPDATE_CURRENT);
+        alarmManager2.setRepeating(AlarmManager.RTC, System.currentTimeMillis()+30*1000, 2*60*1000, pi2);
+
+
+
+
 
 
         Log.v("catttt2",URL_DATA_final);
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -242,12 +326,15 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
 
 
+            Intent intent = new Intent(this,MyService.class);
 
-            events.clear();
-            Log.v(  "sonhal",URL_DATA_final);
-            LoadData load = new LoadData((myAdapter) adapter, this);
+            intent.putExtra("myURL",URL_DATA_final);
 
-            load.execute(URL_DATA_final);
+
+
+            this.startService(intent);
+
+
 
 
             adapter.notifyDataSetChanged();
@@ -280,12 +367,50 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
 
     }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        IntentFilter intentFilter = new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        registerReceiver(wifiStateReceiver, intentFilter);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(wifiStateReceiver);
+    }
+
+    private BroadcastReceiver wifiStateReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            int wifiStateExtra = intent.getIntExtra(WifiManager.EXTRA_WIFI_STATE,
+                    WifiManager.WIFI_STATE_UNKNOWN);
+
+            switch (wifiStateExtra) {
+                case WifiManager.WIFI_STATE_ENABLED:
+                    Toast toast = Toast.makeText(getApplicationContext(),
+                            "WIFI CONNECTION IS AVAILABLE BRO",
+                            Toast.LENGTH_SHORT);
+
+                    toast.show();
+                    break;
+                case WifiManager.WIFI_STATE_DISABLED:
+                    Toast toast2= Toast.makeText(getApplicationContext(),
+                            "WIFI CONNECTION IS NOT AVAILABLE BRO ",
+                            Toast.LENGTH_SHORT);
+
+                    toast2.show();
+                    break;
+            }
+        }
+    };
 
     @Override
     public void onLoadFinished(@NonNull Loader<Cursor> loader, Cursor data) {
 
        adapter.swapCursor(data);
 
+       adapter.notifyDataSetChanged();
 
 
 
@@ -297,4 +422,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     public void onLoaderReset(@NonNull Loader<Cursor> loader) {
 
     }
+
+
 }

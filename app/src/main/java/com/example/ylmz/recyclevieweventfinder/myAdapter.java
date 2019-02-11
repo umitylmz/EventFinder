@@ -17,34 +17,27 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.ylmz.recyclevieweventfinder.LoadData.ids;
+
 
 
 public class myAdapter extends RecyclerView.Adapter<EventHolder> {
 
     List<Event> events;
+    public static ArrayList<String> ids=new ArrayList<String>();
     private Context context;
     public static Cursor mCursor;
+   public  Cursor mcursor;
     Uri URI3 = Uri.parse("content://com.example.ylmz.recyclevieweventfinder").buildUpon()
             .appendPath("events").build();
 
     String[] projection={"title","time","picture","description"};
 
-    public List<Event> getEvents() {
-        return events;
-    }
 
-    public void setEvents(List<Event> events) {
-        this.events = events;
-    }
 
-    public void swapItems(List<Event> change){
-        this.events = change;
-        notifyDataSetChanged();
-    }
 
-    public myAdapter(List<Event> events, Context context) {
-        this.events = events;
+
+    public myAdapter(Context context) {
+
         this.context = context;
     }
 
@@ -72,7 +65,7 @@ public class myAdapter extends RecyclerView.Adapter<EventHolder> {
 
         String id=ids.get(i);
 
-        Cursor mcursor =context.getContentResolver().query(URI3,projection,"eventid =?",new String[]{id},null);
+        mcursor =context.getContentResolver().query(URI3,projection,"eventid =?",new String[]{id},null);
         mcursor.moveToPosition(0);
 
                 title=mcursor.getString(0);
@@ -122,7 +115,9 @@ public class myAdapter extends RecyclerView.Adapter<EventHolder> {
 
     @Override
     public int getItemCount() {
-        return events.size();
+        Log.v("SERVİSTENİTEMCOUNT",String.valueOf(ids.size()));
+        return ids.size()   ;
+
     }
 
     public void swapCursor(Cursor newCursor){
